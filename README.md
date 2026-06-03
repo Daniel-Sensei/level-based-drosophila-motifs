@@ -1,4 +1,4 @@
-# 🧠 Automated Drosophila Connectome Motif Discovery
+# 🧠 Detecting and Investigating Complex Connectome Motifs in the Adult Drosophila
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
 ![SciPy](https://img.shields.io/badge/SciPy-Sparse%20Linear%20Algebra-005380?logo=scipy)
