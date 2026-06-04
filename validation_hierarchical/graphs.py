@@ -76,8 +76,8 @@ CLASS_ORDER_FIXED = [
 # 1. LOAD & PREPARE DATA
 # ─────────────────────────────────────────────
 print("Loading data...")
-df       = pd.read_csv('..//COORDINATE_XY_with_levels_tree.csv')
-df_class = pd.read_csv('..//classification.csv')
+df       = pd.read_csv('..//data/COORDINATE_XY_with_levels_tree.csv')
+df_class = pd.read_csv('..//data/classification.csv')
 
 if 'target' in df.columns:
     df.rename(columns={'target': 'super_class'}, inplace=True)
@@ -393,7 +393,7 @@ print("  Saved StackedBar.png")
 print("[Fig 4] Connection heatmaps...")
 
 try:
-    conn = pd.read_csv('..//connections.csv')
+    conn = pd.read_csv('..//data/connections.csv')
 
     id_to_level = df.set_index('root_id')['level'].to_dict()
     id_to_class = df.set_index('root_id')['super_class'].to_dict()

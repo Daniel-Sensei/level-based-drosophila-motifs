@@ -126,9 +126,9 @@ def worker_process_start_node(start_node_key):
     return local_results
 
 def compute_metagraph_topology(NL_WINDOW, out_folder, nh=None, max_jump=1, no_self_loops=False,
-                               conn_file="../connections.csv",
-                               levels_file="../COORDINATE_XY_with_levels_tree.csv",
-                               class_file="../classification.csv",
+                               conn_file="../data/connections.csv",
+                               levels_file="../data/COORDINATE_XY_with_levels_tree.csv",
+                               class_file="../data/classification.csv",
                                n_cores=1):
 
     global G_NEIGHBOR_MAP, G_GROUPS, G_NH, G_TARGET_LEVELS
