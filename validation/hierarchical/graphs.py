@@ -76,8 +76,8 @@ CLASS_ORDER_FIXED = [
 # 1. LOAD & PREPARE DATA
 # ─────────────────────────────────────────────
 print("Loading data...")
-df       = pd.read_csv('..//data/COORDINATE_XY_with_levels_tree.csv')
-df_class = pd.read_csv('..//data/classification.csv')
+df       = pd.read_csv('../../data/COORDINATE_XY_with_levels_tree.csv')
+df_class = pd.read_csv('../../data/classification.csv')
 
 if 'target' in df.columns:
     df.rename(columns={'target': 'super_class'}, inplace=True)
@@ -237,7 +237,7 @@ if len(annotations) == n_nodes:
 
 ax.axis('off')
 fig.tight_layout()
-fig.savefig('DecisionTree.png', dpi=200, bbox_inches='tight')
+fig.savefig('./graphs/DecisionTree.png', dpi=200, bbox_inches='tight')
 plt.close(fig)
 print("  Saved DecisionTree.png")
 
@@ -327,7 +327,7 @@ for j in range(n_cls, len(axes_flat)):
 
 fig.suptitle(None)
 
-fig.savefig('KDE_SmallMultiples.png')
+fig.savefig('./graphs/KDE_SmallMultiples.png')
 plt.close(fig)
 print("  Saved KDE_SmallMultiples.png")
 
@@ -383,7 +383,7 @@ legend = ax.legend(
 )
 sns.despine(ax=ax)
 fig.tight_layout(rect=[0, 0, 0.82, 1])
-fig.savefig('StackedBar.png')
+fig.savefig('./graphs/StackedBar.png')
 plt.close(fig)
 print("  Saved StackedBar.png")
 
@@ -393,7 +393,7 @@ print("  Saved StackedBar.png")
 print("[Fig 4] Connection heatmaps...")
 
 try:
-    conn = pd.read_csv('..//data/connections.csv')
+    conn = pd.read_csv('../../data/connections.csv')
 
     id_to_level = df.set_index('root_id')['level'].to_dict()
     id_to_class = df.set_index('root_id')['super_class'].to_dict()
@@ -501,7 +501,7 @@ try:
     for j in range(len(hm_order), len(axes_flat)):
         axes_flat[j].set_visible(False)
 
-    fig.savefig('Heatmap.png')
+    fig.savefig('./graphs/Heatmap.png')
     plt.close(fig)
     print("  Saved Heatmap.png")
 

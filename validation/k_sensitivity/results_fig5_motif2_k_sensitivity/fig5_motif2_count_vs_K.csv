@@ -1,0 +1,12 @@
+K,condition,edges,motif,count
+0,syn_count > 0,2700513,fig_5_motif_2,8428204
+1,syn_count > 1,2700326,fig_5_motif_2,8428191
+2,syn_count > 2,2684229,fig_5_motif_2,8385921
+3,syn_count > 3,2599760,fig_5_motif_2,8112050
+4,syn_count > 4,2484367,fig_5_motif_2,7683012
+5,syn_count > 5,1945018,fig_5_motif_2,5790186
+6,syn_count > 6,1567732,fig_5_motif_2,4281517
+7,syn_count > 7,1293099,fig_5_motif_2,3095585
+8,syn_count > 8,1085806,fig_5_motif_2,2291813
+9,syn_count > 9,925205,fig_5_motif_2,1655028
+10,syn_count > 10,798195,fig_5_motif_2,1225644
