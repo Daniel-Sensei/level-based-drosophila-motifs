@@ -8,34 +8,38 @@ PY=python
 SCRIPT="compute.py"
 
 WINDOWS=(
-    "1-2-3-4-5"
+    "1-2-3"
 )
 
 # PARAMETERS
 NH_VALUES=(1)
-MAX_JUMPS=(4)
+MAX_JUMPS=(1)
 SELF_LOOP_MODES=("no")
+K_VALUES=(1 5) 
 
 for W in "${WINDOWS[@]}"; do
     for NH in "${NH_VALUES[@]}"; do
         for J in "${MAX_JUMPS[@]}"; do
             for S in "${SELF_LOOP_MODES[@]}"; do
+                for K in "${K_VALUES[@]}"; do
 
-                echo ">>> nl=$W | nh=$NH | nj=$J | no_self_loops=$S"
+                    echo ">>> nl=$W | nh=$NH | nj=$J | no_self_loops=$S | k=$K"
 
-                if [[ "$S" == "no" ]]; then
-                    NO_SELF="--no_self_loops"
-                else
-                    NO_SELF=""
-                fi
+                    if [[ "$S" == "no" ]]; then
+                        NO_SELF="--no_self_loops"
+                    else
+                        NO_SELF=""
+                    fi
 
-                $PY $SCRIPT \
-                    --window "$W" \
-                    --nh "$NH" \
-                    --max_jump "$J" \
-                    $NO_SELF \
-                    --outdir "results_csv"
-                echo ""
+                    $PY $SCRIPT \
+                        --window "$W" \
+                        --nh "$NH" \
+                        --max_jump "$J" \
+                        --k "$K" \
+                        $NO_SELF \
+                        --outdir "results_csv"
+                    echo ""
+                done
             done
         done
     done

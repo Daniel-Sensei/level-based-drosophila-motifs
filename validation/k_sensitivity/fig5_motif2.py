@@ -124,12 +124,9 @@ def build_adjacency(df_conn, neuron_to_idx, threshold):
     """
     Keep exactly the same binary-edge semantics as compute.py, but make
     the synaptic threshold configurable.
-
-        current code: syn_count > 0
-        this script : syn_count > threshold
     """
     df_edges = df_conn[
-        df_conn["syn_count"] > threshold
+        df_conn["syn_count"] >= threshold
     ][["pre_root_id", "post_root_id"]].drop_duplicates()
 
     s_pre = df_edges["pre_root_id"].map(neuron_to_idx)
@@ -205,8 +202,8 @@ def count_occurrences(motif, groups, adjacency):
 def main():
     parser = argparse.ArgumentParser(
         description=(
-            "Compute Figure 5 Motif 2 count for K=0..10, "
-            "where an edge is retained when syn_count > K."
+            "Compute Figure 5 Motif 2 count for K=1..10, "
+            "where an edge is retained when syn_count >= K."
         )
     )
 
@@ -233,8 +230,8 @@ def main():
     parser.add_argument(
         "--k-min",
         type=int,
-        default=0,
-        help="Minimum K threshold (default: 0)",
+        default=1,
+        help="Minimum K threshold (default: 1)",
     )
     parser.add_argument(
         "--k-max",
@@ -245,7 +242,7 @@ def main():
 
     args = parser.parse_args()
 
-    if args.k_min < 0 or args.k_max < args.k_min:
+    if args.k_min < 1 or args.k_max < args.k_min:
         raise ValueError("Invalid K range.")
 
     outdir = Path(args.outdir)
@@ -275,8 +272,8 @@ def main():
     )
 
     print("\nImportant:")
-    print("  K=0 means syn_count > 0, i.e. the current implementation.")
-    print("  K=5 means syn_count > 5.")
+    print("  K=1 means syn_count >= 1, i.e. the current implementation.")
+    print("  K=5 means syn_count >= 5.")
     print("  Levels and classification are NOT recomputed for each K.")
     print("  Only the adjacency/connectivity threshold changes.")
 
@@ -302,7 +299,7 @@ def main():
 
         results.append({
             "K": k,
-            "condition": f"syn_count > {k}",
+            "condition": f"syn_count >= {k}",
             "edges": adjacency.nnz,
             "motif": FIG_5_MOTIF_2["name"],
             "count": count,
@@ -310,7 +307,7 @@ def main():
 
         print(
             f"{k:>4} "
-            f"{'syn_count > ' + str(k):>18} "
+            f"{'syn_count >= ' + str(k):>18} "
             f"{adjacency.nnz:>15,} "
             f"{count:>20,}"
         )

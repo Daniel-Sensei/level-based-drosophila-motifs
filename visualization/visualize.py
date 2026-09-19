@@ -23,12 +23,12 @@ CLASS_COLOR_MAP = {
     'DEFAULT': '#7f7f7f'
 }
 
-def visualize_motifs(WINDOW_STR, NH_VALUE, MAX_JUMP, TOP_N, BASE_IN_DIR, BASE_OUT_DIR):
+def visualize_motifs(WINDOW_STR, NH_VALUE, MAX_JUMP, K_VALUE, TOP_N, BASE_IN_DIR, BASE_OUT_DIR):
     """
     Load motif results and visualize Top N.
     """
     # --- 1. File Search ---
-    INPUT_DIR = os.path.join(BASE_IN_DIR, WINDOW_STR)
+    INPUT_DIR = os.path.join(BASE_IN_DIR, f"{WINDOW_STR}_k{K_VALUE}")
     found_file = None
     base_name = f"motifs_nl{WINDOW_STR}"
     
@@ -40,6 +40,8 @@ def visualize_motifs(WINDOW_STR, NH_VALUE, MAX_JUMP, TOP_N, BASE_IN_DIR, BASE_OU
             
         if MAX_JUMP:
             candidates = [f for f in candidates if f"_jump{MAX_JUMP}" in f]
+
+        candidates = [f for f in candidates if f"_k{K_VALUE}.csv" in f]
         
         if candidates:
             candidates.sort(reverse=True)
@@ -49,7 +51,7 @@ def visualize_motifs(WINDOW_STR, NH_VALUE, MAX_JUMP, TOP_N, BASE_IN_DIR, BASE_OU
         print(f"[ERROR] No compatible CSV file found in {INPUT_DIR}")
         return
         
-    OUTPUT_DIR = os.path.join(BASE_OUT_DIR, WINDOW_STR)
+    OUTPUT_DIR = os.path.join(BASE_OUT_DIR, f"{WINDOW_STR}_k{K_VALUE}")
     subfolder_name = f"nh{NH_VALUE if NH_VALUE else 'All'}_nj{MAX_JUMP if MAX_JUMP else '1'}"
     OUTPUT_DIR = os.path.join(OUTPUT_DIR, subfolder_name)
 
@@ -212,7 +214,7 @@ def visualize_motifs(WINDOW_STR, NH_VALUE, MAX_JUMP, TOP_N, BASE_IN_DIR, BASE_OU
         nj_val = MAX_JUMP if MAX_JUMP else "1"
         
         title_text = (f"Rank #{rank} | Count: {count:,}\n"
-                      f"nl: [{nl_val}] | nh: {nh_val} | nj: {nj_val}")
+                      f"nl: [{nl_val}] | nh: {nh_val} | nj: {nj_val} | k: {K_VALUE}")
         
         plt.title(title_text, fontsize=14, fontweight='bold', pad=20)
         
@@ -236,6 +238,7 @@ if __name__ == "__main__":
     parser.add_argument("--window", required=True, help="E.g.: 1-2-3")
     parser.add_argument("--nh", type=int, default=None)
     parser.add_argument("--max_jump", type=int, default=None)
+    parser.add_argument("--k", type=int, default=1, help="Minimum syn_count threshold") # AGGIUNTO
     parser.add_argument("--top_n", type=int, default=3)
     parser.add_argument("--indir", default="metagraph_csv")
     parser.add_argument("--outdir", default="metagraph_png")
@@ -246,6 +249,7 @@ if __name__ == "__main__":
         WINDOW_STR=args.window, 
         NH_VALUE=args.nh, 
         MAX_JUMP=args.max_jump,
+        K_VALUE=args.k,
         TOP_N=args.top_n, 
         BASE_IN_DIR=args.indir, 
         BASE_OUT_DIR=args.outdir
